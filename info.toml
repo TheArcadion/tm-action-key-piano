@@ -1,0 +1,9 @@
+[meta]
+name     = "Action Key Piano"
+author   = "TheArcadion_"
+category = "Audio"
+version  = "1.0.0"
+
+[script]
+dependencies = [ "VehicleState" ]
+timeout = 0
