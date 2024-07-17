@@ -17,22 +17,21 @@ class RaceState {
         auto shouldPlay = currentActionKey != actionKey || actionKey != ActionKey::AK5;
         currentActionKey = currentActionKey == actionKey ? ActionKey::AK5 : actionKey;
         if (!shouldPlay) return;
-        auto audioGain = 0.8f;
         switch (currentActionKey) {
             case ActionKey::AK1:
-                Audio::Play(g_ak1Sound, audioGain);
+                Audio::Play(g_ak1Sound, g_pianoSoundGain);
                 break;
             case ActionKey::AK2:
-                Audio::Play(g_ak2Sound, audioGain);
+                Audio::Play(g_ak2Sound, g_pianoSoundGain);
                 break;
             case ActionKey::AK3:
-                Audio::Play(g_ak3Sound, audioGain);
+                Audio::Play(g_ak3Sound, g_pianoSoundGain);
                 break;
             case ActionKey::AK4:
-                Audio::Play(g_ak4Sound, audioGain);
+                Audio::Play(g_ak4Sound, g_pianoSoundGain);
                 break;
             case ActionKey::AK5:
-                Audio::Play(g_ak5Sound, audioGain);
+                Audio::Play(g_ak5Sound, g_pianoSoundGain);
                 break;
         }
     }

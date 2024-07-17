@@ -1,0 +1,4 @@
+enum PianoTypes {
+	Piano,
+	TackPiano
+}
