@@ -3,7 +3,8 @@ const array<PianoTypes> c_ActivePianoTypes = {
 	PianoTypes::HonkyTonkPiano,
 	PianoTypes::ToyPiano,
 	PianoTypes::Theremin,
-	PianoTypes::Saxophone
+	PianoTypes::Saxophone,
+	PianoTypes::ClownHorn
 };
 
 const array<MusicNote> c_ActiveMusicNotes = {
