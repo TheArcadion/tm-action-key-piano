@@ -1,3 +1,5 @@
+Audio::Voice@ g_currentlyPlayingSound;
+
 class RaceState {
     ActionKey currentActionKey = ActionKey::AK5;
     ActionKey lastCpActionKey = ActionKey::AK5;
@@ -18,21 +20,22 @@ class RaceState {
         currentActionKey = currentActionKey == actionKey ? ActionKey::AK5 : actionKey;
 		if (!g_initialized) return;
         if (!shouldPlay) return;
+		if (g_currentlyPlayingSound !is null) g_currentlyPlayingSound.SetGain(0);
         switch (currentActionKey) {
             case ActionKey::AK1:
-                Audio::Play(g_ak1Sound, g_pianoSoundGain);
+                @g_currentlyPlayingSound = Audio::Play(g_ak1Sound, g_pianoSoundGain);
                 break;
             case ActionKey::AK2:
-                Audio::Play(g_ak2Sound, g_pianoSoundGain);
+                @g_currentlyPlayingSound = Audio::Play(g_ak2Sound, g_pianoSoundGain);
                 break;
             case ActionKey::AK3:
-                Audio::Play(g_ak3Sound, g_pianoSoundGain);
+                @g_currentlyPlayingSound = Audio::Play(g_ak3Sound, g_pianoSoundGain);
                 break;
             case ActionKey::AK4:
-                Audio::Play(g_ak4Sound, g_pianoSoundGain);
+                @g_currentlyPlayingSound = Audio::Play(g_ak4Sound, g_pianoSoundGain);
                 break;
             case ActionKey::AK5:
-                Audio::Play(g_ak5Sound, g_pianoSoundGain);
+                @g_currentlyPlayingSound = Audio::Play(g_ak5Sound, g_pianoSoundGain);
                 break;
         }
     }

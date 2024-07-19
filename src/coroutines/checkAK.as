@@ -20,6 +20,8 @@ void CheckAKCoro()
 
     while (true) {
         yield();
+		
+		if (!g_enableAKPianoSound) continue;
 
         CSmArenaClient@ playground = cast<CSmArenaClient>(app.CurrentPlayground);
         if (playground is null || playground.ArenaInterface is null || app.GameScene is null)

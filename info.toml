@@ -2,7 +2,7 @@
 name     = "Action Key Piano"
 author   = "TheArcadion_"
 category = "Audio"
-version  = "1.0.0"
+version  = "1.0.1"
 
 [script]
 dependencies = [ "VehicleState" ]

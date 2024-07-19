@@ -13,8 +13,8 @@ void loadSounds() {
 }
 
 void loadSound(PianoTypes type, MusicNote note, ActionKey actionKey) {
-	auto soundPath = "sounds/" + type + "/" + resolveNotePath(note) + ".flac";
-	auto soundSample = Audio::LoadSample(soundPath);
+	auto soundPath = getLocalPath(type, note);
+	auto soundSample = Audio::LoadSampleFromAbsolutePath(soundPath);
 	switch(actionKey) {
 		case ActionKey::AK1:
 			@g_ak1Sound = soundSample;
@@ -32,6 +32,10 @@ void loadSound(PianoTypes type, MusicNote note, ActionKey actionKey) {
 			@g_ak5Sound = soundSample;
 			break;
 	}
+}
+
+string getLocalPath(PianoTypes type, MusicNote note) {
+	return AudioLocalPath + "/" + type + "/" + resolveNotePath(note) + ".flac";
 }
 
 string resolveNotePath(MusicNote note) {
