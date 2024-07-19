@@ -10,7 +10,7 @@ MusicNote g_AK1Note = MusicNote::C2;
 [Setting category="Piano" name="Action key 2 Note"]
 MusicNote g_AK2Note = MusicNote::G2;
 [Setting category="Piano" name="Action key 3 Note"]
-MusicNote g_AK3Note = MusicNote::B2;
+MusicNote g_AK3Note = MusicNote::B3;
 [Setting category="Piano" name="Action key 4 Note"]
 MusicNote g_AK4Note = MusicNote::E3;
 [Setting category="Piano" name="Action key 5 Note"]
