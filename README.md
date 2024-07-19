@@ -7,6 +7,7 @@ Available music notes: ![Screenshot of all music notes that are provided for eac
 
 Planned features:
 - Custom mp3 support for each action key
+- Play a song note for note when an action key gets pressed
 
 If you experience any issues using this plugin, create a new issue [https://github.com/TheArcadion/tm-action-key-piano/issues](here) describing your problem. Also include your "Openplanet.log". This file can be found in the C:/Users/\<your user>/OpenplanetNext folder.
 Credits:
