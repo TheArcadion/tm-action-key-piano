@@ -1,13 +1,11 @@
-RaceState@ currentState;
-
-bool g_initialized;
 void Main() {
-    @currentState = RaceState();
+	// Download sounds
+	refreshLocalSounds();
 
-    loadSounds();
-    startnew(CheckChangedSettingCoro).WithRunContext(Meta::RunContext::BeforeScripts);
-    startnew(CheckAKCoro).WithRunContext(Meta::RunContext::BeforeScripts);
-    
-    yield();
-    g_initialized = true;
+	// Load sounds and 
+    startnew(OnSoundsDownloadedCoro).WithRunContext(Meta::RunContext::BeforeScripts);
+}
+
+void RenderEarly() {
+	updateDownloads();
 }

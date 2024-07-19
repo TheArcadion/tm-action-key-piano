@@ -14,8 +14,9 @@ class RaceState {
     }
 
     void SetActionKey(ActionKey actionKey) {
-        auto shouldPlay = currentActionKey != actionKey || actionKey != ActionKey::AK5;
         currentActionKey = currentActionKey == actionKey ? ActionKey::AK5 : actionKey;
+		if (!g_initialized) return;
+        auto shouldPlay = currentActionKey != actionKey || actionKey != ActionKey::AK5;
         if (!shouldPlay) return;
         switch (currentActionKey) {
             case ActionKey::AK1:

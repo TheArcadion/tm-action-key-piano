@@ -1,9 +1,9 @@
 PianoTypes old_pianoType;
-MusicNotes old_AK1Note = g_AK1Note;
-MusicNotes old_AK2Note = g_AK2Note;
-MusicNotes old_AK3Note = g_AK3Note;
-MusicNotes old_AK4Note = g_AK4Note;
-MusicNotes old_AK5Note = g_AK5Note;
+MusicNote old_AK1Note = g_AK1Note;
+MusicNote old_AK2Note = g_AK2Note;
+MusicNote old_AK3Note = g_AK3Note;
+MusicNote old_AK4Note = g_AK4Note;
+MusicNote old_AK5Note = g_AK5Note;
 
 void CheckChangedSettingCoro()
 {	

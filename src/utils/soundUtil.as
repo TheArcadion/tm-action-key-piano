@@ -3,6 +3,7 @@ Audio::Sample@ g_ak2Sound;
 Audio::Sample@ g_ak3Sound;
 Audio::Sample@ g_ak4Sound;
 Audio::Sample@ g_ak5Sound;
+
 void loadSounds() {
 	loadSound(g_pianoType, g_AK1Note, ActionKey::AK1);
 	loadSound(g_pianoType, g_AK2Note, ActionKey::AK2);
@@ -11,9 +12,8 @@ void loadSounds() {
 	loadSound(g_pianoType, g_AK5Note, ActionKey::AK5);
 }
 
-void loadSound(PianoTypes type, MusicNotes note, ActionKey actionKey) {
-	string notePath = resolveNotePath(note);
-	auto soundPath = "sounds/" + type + "/" + notePath + ".flac";
+void loadSound(PianoTypes type, MusicNote note, ActionKey actionKey) {
+	auto soundPath = "sounds/" + type + "/" + resolveNotePath(note) + ".flac";
 	auto soundSample = Audio::LoadSample(soundPath);
 	switch(actionKey) {
 		case ActionKey::AK1:
@@ -34,30 +34,30 @@ void loadSound(PianoTypes type, MusicNotes note, ActionKey actionKey) {
 	}
 }
 
-string resolveNotePath(MusicNotes note) {
+string resolveNotePath(MusicNote note) {
 	switch(note) {
-		case MusicNotes::C1: return "C1";
-	    case MusicNotes::D1: return "D1";
-	    case MusicNotes::E1: return "E1";
-	    case MusicNotes::F1: return "F1";
-	    case MusicNotes::G1: return "G1";
-	    case MusicNotes::A1: return "A1";
-	    case MusicNotes::B1: return "B1";
-	    case MusicNotes::C2: return "C2";
-	    case MusicNotes::D2: return "D2";
-	    case MusicNotes::E2: return "E2";
-	    case MusicNotes::F2: return "F2";
-	    case MusicNotes::G2: return "G2";
-	    case MusicNotes::A2: return "A2";
-	    case MusicNotes::B2: return "B2";
-	    case MusicNotes::C3: return "C3";
-	    case MusicNotes::D3: return "D3";
-	    case MusicNotes::E3: return "E3";
-	    case MusicNotes::F3: return "F3";
-	    case MusicNotes::G3: return "G3";
-	    case MusicNotes::A3: return "A3";
-	    case MusicNotes::B3: return "B3";
-	    case MusicNotes::C4: return "C4";
+		case MusicNote::C1: return "C1";
+	    case MusicNote::D1: return "D1";
+	    case MusicNote::E1: return "E1";
+	    case MusicNote::F1: return "F1";
+	    case MusicNote::G1: return "G1";
+	    case MusicNote::A2: return "A2";
+	    case MusicNote::B2: return "B2";
+	    case MusicNote::C2: return "C2";
+	    case MusicNote::D2: return "D2";
+	    case MusicNote::E2: return "E2";
+	    case MusicNote::F2: return "F2";
+	    case MusicNote::G2: return "G2";
+	    case MusicNote::A3: return "A3";
+	    case MusicNote::B3: return "B3";
+	    case MusicNote::C3: return "C3";
+	    case MusicNote::D3: return "D3";
+	    case MusicNote::E3: return "E3";
+	    case MusicNote::F3: return "F3";
+	    case MusicNote::G3: return "G3";
+	    case MusicNote::A4: return "A4";
+	    case MusicNote::B4: return "B4";
+	    case MusicNote::C4: return "C4";
 	}
 	return "Unknown";
 }

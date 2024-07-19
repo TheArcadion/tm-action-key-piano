@@ -8,8 +8,11 @@ int g_StartTime;
 int g_LastSeq;
 int g_RespawnRegainControl;
 
+RaceState@ currentState;
+
 void CheckAKCoro()
 {
+    @currentState = RaceState();
     yield();
 
     CGameCtnApp@ app = GetApp();
