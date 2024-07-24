@@ -33,6 +33,10 @@ void refreshLocalSounds() {
 	}
 }
 
+string getLocalPath(PianoTypes type, MusicNote note) {
+	return AudioLocalPath + "/" + type + "/" + resolveNotePath(note) + ".flac";
+}
+
 string getRemotePath(PianoTypes type, MusicNote note) {
 	return AudioRemoteUrl + "/" + type + "/" + resolveNotePath(note) + ".flac";
 }

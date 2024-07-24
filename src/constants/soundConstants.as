@@ -31,3 +31,39 @@ const array<MusicNote> c_ActiveMusicNotes = {
 	MusicNote::B4,	
 	MusicNote::C4
 };
+
+const array<array<MusicNote>> c_SongMusicNotes = {
+	{
+		MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, 
+		MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, 
+		MusicNote::E3, MusicNote::E3, MusicNote::E3, MusicNote::E3, MusicNote::E3, MusicNote::E3, MusicNote::E3, 
+		MusicNote::D3, MusicNote::D3, MusicNote::D3, MusicNote::D3, MusicNote::D3, MusicNote::D3, MusicNote::D3, MusicNote::A3, 
+		
+		MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3,
+		MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::E3,
+		MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3,
+		MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::B3, MusicNote::E3
+	},
+	{
+		MusicNote::G2, MusicNote::A3, MusicNote::C3, MusicNote::A3,
+		MusicNote::E3, MusicNote::E3, MusicNote::D3,
+		
+		MusicNote::G2, MusicNote::A3, MusicNote::C3, MusicNote::A3,
+		MusicNote::D3, MusicNote::D3, MusicNote::C3, MusicNote::B3, MusicNote::A3,
+		
+		MusicNote::G2, MusicNote::A3, MusicNote::C3, MusicNote::A3,
+		MusicNote::C3, MusicNote::D3, MusicNote::B3, MusicNote::A3, MusicNote::G2,
+		MusicNote::G2, MusicNote::D3, MusicNote::C3,
+		
+		MusicNote::G2, MusicNote::A3, MusicNote::C3, MusicNote::A3,
+		MusicNote::E3, MusicNote::E3, MusicNote::D3,
+		
+		
+		MusicNote::G2, MusicNote::A3, MusicNote::C3, MusicNote::A3,
+		MusicNote::G3, MusicNote::B3, MusicNote::C3, MusicNote::B3, MusicNote::A3,
+		
+		MusicNote::G2, MusicNote::A3, MusicNote::C3, MusicNote::A3,
+		MusicNote::C3, MusicNote::D3, MusicNote::B3, MusicNote::A3, MusicNote::G2,
+		MusicNote::G2, MusicNote::D3, MusicNote::C3
+	}
+};

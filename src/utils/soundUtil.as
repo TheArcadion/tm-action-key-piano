@@ -5,37 +5,17 @@ Audio::Sample@ g_ak4Sound;
 Audio::Sample@ g_ak5Sound;
 
 void loadSounds() {
-	loadSound(g_pianoType, g_AK1Note, ActionKey::AK1);
-	loadSound(g_pianoType, g_AK2Note, ActionKey::AK2);
-	loadSound(g_pianoType, g_AK3Note, ActionKey::AK3);
-	loadSound(g_pianoType, g_AK4Note, ActionKey::AK4);
-	loadSound(g_pianoType, g_AK5Note, ActionKey::AK5);
+	@g_ak1Sound = loadSound(g_pianoType, g_AK1Note);
+	@g_ak2Sound = loadSound(g_pianoType, g_AK2Note);
+	@g_ak3Sound = loadSound(g_pianoType, g_AK3Note);
+	@g_ak4Sound = loadSound(g_pianoType, g_AK4Note);
+	@g_ak5Sound = loadSound(g_pianoType, g_AK5Note);
 }
 
-void loadSound(PianoTypes type, MusicNote note, ActionKey actionKey) {
+Audio::Sample@ loadSound(PianoTypes type, MusicNote note) {
 	auto soundPath = getLocalPath(type, note);
 	auto soundSample = Audio::LoadSampleFromAbsolutePath(soundPath);
-	switch(actionKey) {
-		case ActionKey::AK1:
-			@g_ak1Sound = soundSample;
-			break;
-		case ActionKey::AK2:
-			@g_ak2Sound = soundSample;
-			break;
-		case ActionKey::AK3:
-			@g_ak3Sound = soundSample;
-			break;
-		case ActionKey::AK4:
-			@g_ak4Sound = soundSample;
-			break;
-		case ActionKey::AK5:
-			@g_ak5Sound = soundSample;
-			break;
-	}
-}
-
-string getLocalPath(PianoTypes type, MusicNote note) {
-	return AudioLocalPath + "/" + type + "/" + resolveNotePath(note) + ".flac";
+	return soundSample;
 }
 
 string resolveNotePath(MusicNote note) {
