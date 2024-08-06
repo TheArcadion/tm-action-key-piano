@@ -2,6 +2,7 @@ array<MusicNote> g_currentSong;
 uint g_currentSongNote = 0;
 
 Audio::Voice@ g_currentlyPlayingSound;
+bool hasStartedFadeOut = false;
 
 void playNote(ActionKey actionKey) {
 	// Set note counter
@@ -10,8 +11,16 @@ void playNote(ActionKey actionKey) {
 		g_currentSongNote = 0;
 	}
 	
-	// Stop currently playing sound
-	if (g_currentlyPlayingSound !is null) g_currentlyPlayingSound.SetGain(0);
+	// Stop currently playing sound by fading out
+	if (g_currentlyPlayingSound !is null && g_currentlyPlayingSound.GetPosition() < g_currentlyPlayingSound.GetLength()) {
+		startnew(FadeOutCurrentCoro);
+		// Wait for audio copy before reassigning
+		while(!hasStartedFadeOut) yield();
+		
+		// Reassign audio
+		hasStartedFadeOut = false;
+		@g_currentlyPlayingSound = null;
+	}
 	
 	// Play action key note
 	if (!g_enablePlaySong) {
@@ -42,5 +51,24 @@ void playNote(ActionKey actionKey) {
 	g_currentSongNote += 1;
 }
 
-		
+void FadeOutCurrentCoro() {
+	// Copy currently playing audio
+	Audio::Voice@ g_oldSound = g_currentlyPlayingSound;
+	hasStartedFadeOut = true;
+	FadeOut(g_oldSound, 500);
+}
 
+void FadeOut(Audio::Voice@ sound, float duration) {
+    uint64 startTime = Time::get_Now();
+    float initialGain = sound.GetGain();
+
+    while (Time::get_Now() - startTime < duration) {
+        uint64 elapsed = Time::get_Now() - startTime;
+        float progress = elapsed / duration;
+        float newGain = initialGain * (1.0 - (elapsed / duration)); // Linear decay
+        sound.SetGain(newGain);
+        yield();
+    }
+
+    sound.SetGain(0); // Ensure the gain is set to 0 at the end
+}
