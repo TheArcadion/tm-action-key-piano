@@ -1,65 +1,95 @@
-array<MusicNote> g_currentSong;
-uint g_currentSongNote = 0;
+Song@ g_currentSong;
+uint g_currentSongChord = 0;
 
-Audio::Voice@ g_currentlyPlayingSound;
+array<Audio::Voice@>@ g_currentlyPlayingSounds;
 bool hasStartedFadeOut = false;
 
 void playNote(ActionKey actionKey) {
+	uint temp = g_currentSongChord;
 	// Set note counter
-	if (!g_enablePlaySong || g_currentSongNote >= g_currentSong.Length) {
+	if (!g_enablePlaySong || g_currentSong is null || g_currentSongChord >= g_currentSong.notes.Length) {
 		// Set current song note back to zero
-		g_currentSongNote = 0;
+		g_currentSongChord = 0;
 	}
 	
 	// Stop currently playing sound by fading out
-	if (g_currentlyPlayingSound !is null && g_currentlyPlayingSound.GetPosition() < g_currentlyPlayingSound.GetLength()) {
-		startnew(FadeOutCurrentCoro);
-		// Wait for audio copy before reassigning
-		while(!hasStartedFadeOut) yield();
-		
-		// Reassign audio
-		hasStartedFadeOut = false;
-		@g_currentlyPlayingSound = null;
-	}
+	FadeOutAllSounds();
 	
 	// Play action key note
 	if (!g_enablePlaySong) {
-		switch (actionKey) {
-			case ActionKey::AK1:
-				@g_currentlyPlayingSound = Audio::Play(g_ak1Sound, g_pianoSoundGain);
-				break;
-			case ActionKey::AK2:
-				@g_currentlyPlayingSound = Audio::Play(g_ak2Sound, g_pianoSoundGain);
-				break;
-			case ActionKey::AK3:
-				@g_currentlyPlayingSound = Audio::Play(g_ak3Sound, g_pianoSoundGain);
-				break;
-			case ActionKey::AK4:
-				@g_currentlyPlayingSound = Audio::Play(g_ak4Sound, g_pianoSoundGain);
-				break;
-			case ActionKey::AK5:
-				@g_currentlyPlayingSound = Audio::Play(g_ak5Sound, g_pianoSoundGain);
-				break;
-		}
-		return;
+		PlayActionKeyNote(actionKey);
+	} else {
+		// Play song note
+		PlaySongNote();
 	}
-	
-	// Play song note
-	MusicNote currentNote = g_currentSong[g_currentSongNote];
-	Audio::Sample@ soundSample = loadSound(g_pianoType, currentNote);
-	@g_currentlyPlayingSound = Audio::Play(soundSample, g_pianoSoundGain);
-	g_currentSongNote += 1;
+
 }
 
-void FadeOutCurrentCoro() {
-	// Copy currently playing audio
-	Audio::Voice@ g_oldSound = g_currentlyPlayingSound;
-	hasStartedFadeOut = true;
-	FadeOut(g_oldSound, 500);
+void PlayActionKeyNote(ActionKey actionKey) {
+	switch (actionKey) {
+		case ActionKey::AK1:
+			@g_currentlyPlayingSounds = { Audio::Play(g_ak1Sound, g_pianoSoundGain) };
+			break;
+		case ActionKey::AK2:
+			@g_currentlyPlayingSounds = { Audio::Play(g_ak2Sound, g_pianoSoundGain) };
+			break;
+		case ActionKey::AK3:
+			@g_currentlyPlayingSounds = { Audio::Play(g_ak3Sound, g_pianoSoundGain) };
+			break;
+		case ActionKey::AK4:
+			@g_currentlyPlayingSounds = { Audio::Play(g_ak4Sound, g_pianoSoundGain) };
+			break;
+		case ActionKey::AK5:
+			@g_currentlyPlayingSounds = { Audio::Play(g_ak5Sound, g_pianoSoundGain) };
+			break;
+	}
+	return;
+}
+
+void PlaySongNote() {
+	array<int> currentChord = g_currentSong.notes[g_currentSongChord];
+	if (currentChord.Length == 0) return;
+	
+	// Select instrument type
+	PianoTypes type = g_pianoType;
+	if (g_currentSong.onlyPianoAsInstrument) type = PianoTypes::Piano;
+	
+	// Play chords using instrument
+	for (int i = 0; i < currentChord.Length; i++) {
+		Audio::Sample@ soundSample = loadSound(type, currentChord[i]);
+		@g_currentlyPlayingSounds = { Audio::Play(soundSample, g_pianoSoundGain) };
+	}
+	
+	g_currentSongChord += 1;
+}
+
+void FadeOutAllSounds() {
+	// If no sounds are playing, don't fade
+	if (g_currentlyPlayingSounds is null) return;
+	
+	// Copy sounds
+	array<Audio::Voice@>@ oldSounds = g_currentlyPlayingSounds;
+	
+	// Loop over sounds
+	for(uint i = 0; i < oldSounds.Length; i++) {
+		if (oldSounds[i] is null) continue;
+		if (oldSounds[i].GetPosition() < oldSounds[i].GetLength()) {
+			//startnew(FadeOutCurrentCoro);
+			array<Audio::Voice@>@ args = { oldSounds[i] };
+			startnew(FadeOutCoro, args);
+		}
+		@g_currentlyPlayingSounds = null;
+	}	
+}
+
+void FadeOutCoro(ref@ refs) {
+	auto args = cast<array<Audio::Voice@>@>(refs);
+	auto oldSound = args[0];
+	FadeOut(oldSound, 500);
 }
 
 void FadeOut(Audio::Voice@ sound, float duration) {
-    uint64 startTime = Time::get_Now();
+    int64 startTime = Time::get_Now();
     float initialGain = sound.GetGain();
 
     while (Time::get_Now() - startTime < duration) {

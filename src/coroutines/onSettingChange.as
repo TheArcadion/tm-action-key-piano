@@ -6,13 +6,13 @@ MusicNote old_AK4Note = g_AK4Note;
 MusicNote old_AK5Note = g_AK5Note;
 
 bool old_enablePlaySong = false;
-SongIndexes old_songIndex = SongIndexes::Song1;
+SongIndexes old_songIndex = SongIndexes::DarudeSandstorm;
 
 void CheckChangedSettingCoro()
-{	
+{
 	// Set default song
-	g_currentSong = c_SongMusicNotes[g_songIndex];
-	g_currentSongNote = 0;
+	@g_currentSong = c_Songs[g_songIndex];
+	g_currentSongChord = 0;
 	
 	// Start setting change loop
     while (true) {
@@ -20,14 +20,15 @@ void CheckChangedSettingCoro()
 		
 		// If song stting changed, reset current note
 		if (old_enablePlaySong != g_enablePlaySong) {
-			g_currentSongNote = 0;
+			g_currentSongChord = 0;
 			old_enablePlaySong = g_enablePlaySong;
 		}
 		
 		// If song index changed, set new song and reset index
 		if (old_songIndex != g_songIndex) {
-			g_currentSong = c_SongMusicNotes[g_songIndex];
-			g_currentSongNote = 0;
+			print(old_songIndex + " " + g_songIndex);
+			@g_currentSong = c_Songs[g_songIndex];
+			g_currentSongChord = 0;
 			old_songIndex = g_songIndex;
 		}
 		
@@ -36,7 +37,7 @@ void CheckChangedSettingCoro()
 			loadSounds();
 			old_pianoType = g_pianoType;
 			
-			g_currentSongNote = 0;
+			g_currentSongChord = 0;
 			continue;
 		}
 		

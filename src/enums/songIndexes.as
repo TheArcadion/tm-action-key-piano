@@ -1,4 +1,8 @@
 enum SongIndexes {
-	Song1 = 0,
-	Song2 = 1
+	// Classical songs 
+	ClaireDeLune = 0,
+	
+	// Meme songs
+	DarudeSandstorm = 10,
+	SuperSecretSong = 11
 }

@@ -20,7 +20,7 @@ MusicNote g_AK5Note = MusicNote::G3;
 // OR
 
 // Song choice
-[Setting category="Piano" name="Play a song note by note" description="Each time an action key is toggled, the next note in the song gets played"]
+[Setting category="Piano" name="Play a song note by note" description="Each time an action key is toggled, the next note in the song gets played. Classical pieces are Piano only."]
 bool g_enablePlaySong = false;
 [Setting category="Piano" name="Song to play"]
-SongIndexes g_songIndex = SongIndexes::Song1;
+SongIndexes g_songIndex = SongIndexes::DarudeSandstorm;
